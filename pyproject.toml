@@ -1,0 +1,19 @@
+[project]
+name = "setting-core-engine"
+version = "0.0.1"
+description = "Setting Core Engine"
+authors = [{name = "Idea Bosque"}]
+dependencies = [
+  "graphene",
+  "pendulum",
+  "tenacity",
+  "SilvaEngine-DynamoDB-Base",
+  "SilvaEngine-Utility",
+]
+
+[tool.pyright]
+typeCheckingMode = "basic"
+reportCallIssue = "none"
+reportArgumentType = "none"
+reportOptionalMemberAccess = "none"
+reportAttributeAccessIssue = "none"
