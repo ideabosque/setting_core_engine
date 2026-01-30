@@ -41,14 +41,14 @@ class Config:
             "module": "setting_core_engine.models.theme_setting",
             "model_class": "ThemeSettingModel",
             "getter": "get_theme_setting",
-            "list_resolver": "setting_core_engine.queries.theme.resolve_theme_setting_list",
+            "list_resolver": "setting_core_engine.queries.theme_setting.resolve_theme_setting_list",
             "cache_keys": ["context:partition_key", "key:theme_uuid"],
         },
         "setting": {
             "module": "setting_core_engine.models.setting",
             "model_class": "SettingModel",
             "getter": "get_setting",
-            "list_resolver": "setting_core_engine.queries.theme.resolve_setting_list",
+            "list_resolver": "setting_core_engine.queries.setting.resolve_setting_list",
             "cache_keys": ["context:partition_key", "key:setting_uuid"],
         },
     }

@@ -18,7 +18,7 @@ from ..types.setting import SettingListType, SettingType
 
 def resolve_setting(
     info: ResolveInfo, **kwargs: Dict[str, Any]
-) -> SettingType:
+) -> SettingType | None:
     return setting.resolve_setting(info, **kwargs)
 
 

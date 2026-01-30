@@ -18,7 +18,7 @@ from ..types.theme_setting import ThemeSettingListType, ThemeSettingType
 
 def resolve_theme_setting(
     info: ResolveInfo, **kwargs: Dict[str, Any]
-) -> ThemeSettingType:
+) -> ThemeSettingType | None:
     return theme_setting.resolve_theme_setting(info, **kwargs)
 
 

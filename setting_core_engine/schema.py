@@ -63,13 +63,13 @@ class Query(ObjectType):
     def resolve_ping(self, info: ResolveInfo) -> str:
         return f"Hello at {time.strftime('%X')}!!"
 
-    def resolve_theme_setting(self, info: ResolveInfo, **kwargs: Dict[str, Any]) -> ThemeSettingType:
+    def resolve_theme_setting(self, info: ResolveInfo, **kwargs: Dict[str, Any]) -> ThemeSettingType | None:
         return resolve_theme_setting(info, **kwargs)
     
     def resolve_theme_setting_list(self, info: ResolveInfo, **kwargs: Dict[str, Any]) -> ThemeSettingListType:
         return resolve_theme_setting_list(info, **kwargs)
     
-    def resolve_setting(self, info: ResolveInfo, **kwargs: Dict[str, Any]) -> SettingType:
+    def resolve_setting(self, info: ResolveInfo, **kwargs: Dict[str, Any]) -> SettingType | None:
         return resolve_setting(info, **kwargs)
     
     def resolve_setting_list(self, info: ResolveInfo, **kwargs: Dict[str, Any]) -> SettingListType:
