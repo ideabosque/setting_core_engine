@@ -7,14 +7,14 @@ __author__ = "jeffreyw"
 from graphene import DateTime, List, ObjectType, String
 
 from silvaengine_dynamodb_base import ListObjectType
-from silvaengine_utility import JSON
+from silvaengine_utility import JSONCamelCase
 
 
 class ThemeSettingType(ObjectType):
     partition_key = String()
     theme_uuid = String()
     theme_type = String()
-    setting = JSON()
+    setting = JSONCamelCase()
     updated_by = String()
     created_at = DateTime()
     updated_at = DateTime()

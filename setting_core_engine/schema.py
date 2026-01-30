@@ -24,7 +24,6 @@ from .types.theme_setting import ThemeSettingListType, ThemeSettingType
 from .queries.setting import resolve_setting_list, resolve_setting
 from .mutations.setting import InsertUpdateSetting, DeleteSetting
 from .types.setting import SettingType, SettingListType
-from silvaengine_utility import JSON
 
 def type_class():
     return [

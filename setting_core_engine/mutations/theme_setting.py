@@ -8,7 +8,7 @@ from typing import Any, Dict
 
 from graphene import Boolean, Field, Mutation, String
 
-from silvaengine_utility import JSON
+from silvaengine_utility import JSONCamelCase
 
 from ..models.theme_setting import delete_theme_setting, insert_update_theme_setting
 from ..types.theme_setting import ThemeSettingType
@@ -19,7 +19,7 @@ class InsertUpdateThemeSetting(Mutation):
 
     class Arguments:
         theme_type = String(required=True)
-        setting = JSON(required=True)
+        setting = JSONCamelCase(required=True)
         updated_by = String(required=False)
 
     @staticmethod

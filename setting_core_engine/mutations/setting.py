@@ -8,7 +8,7 @@ from typing import Any, Dict
 
 from graphene import Boolean, Field, Mutation, String
 
-from silvaengine_utility import JSON
+from silvaengine_utility import JSONSnakeCase
 
 from ..models.setting import delete_setting, insert_update_setting
 from ..types.setting import SettingType
@@ -19,7 +19,7 @@ class InsertUpdateSetting(Mutation):
 
     class Arguments:
         setting_type = String(required=True)
-        setting = JSON(required=True)
+        setting = JSONSnakeCase(required=True)
         updated_by = String(required=False)
 
     @staticmethod

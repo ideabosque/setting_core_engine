@@ -7,14 +7,14 @@ __author__ = "jeffreyw"
 from graphene import DateTime, List, ObjectType, String
 
 from silvaengine_dynamodb_base import ListObjectType
-from silvaengine_utility import JSON
+from silvaengine_utility import JSONSnakeCase
 
 
 class SettingType(ObjectType):
     partition_key = String()
     setting_uuid = String()
     setting_type = String()
-    setting = JSON()
+    setting = JSONSnakeCase()
     updated_by = String()
     created_at = DateTime()
     updated_at = DateTime()
