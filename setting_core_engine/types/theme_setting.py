@@ -14,6 +14,8 @@ class ThemeSettingType(ObjectType):
     partition_key = String()
     theme_uuid = String()
     theme_type = String()
+    theme_title = String()
+    theme_description = String()
     setting = JSONCamelCase()
     updated_by = String()
     created_at = DateTime()

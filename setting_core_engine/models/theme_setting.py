@@ -51,6 +51,9 @@ class ThemeSettingModel(BaseModel):
     theme_uuid = UnicodeAttribute(range_key=True)
     
     theme_type = UnicodeAttribute()
+
+    theme_title = UnicodeAttribute()
+    theme_description = UnicodeAttribute()
     setting = MapAttribute()
     updated_by = UnicodeAttribute()
     created_at = UTCDateTimeAttribute()
@@ -198,6 +201,8 @@ def insert_update_theme_setting(info: ResolveInfo, **kwargs: Dict[str, Any]) -> 
     if kwargs.get("entity") is None:
         cols = {
             "theme_type": kwargs.get("theme_type"),
+            "theme_title": kwargs.get("theme_title"),
+            "theme_description": kwargs.get("theme_description"),
             "setting": kwargs.get("setting", {}),
             "updated_by": kwargs["updated_by"],
             "created_at": pendulum.now("UTC"),
@@ -218,7 +223,9 @@ def insert_update_theme_setting(info: ResolveInfo, **kwargs: Dict[str, Any]) -> 
     ]
 
     field_map = {
-        "setting": ThemeSettingModel.setting,
+        "theme_title": ThemeSettingModel.theme_title,
+        "theme_description": ThemeSettingModel.theme_description,
+        "setting": ThemeSettingModel.setting
     }
 
     for key, field in field_map.items():

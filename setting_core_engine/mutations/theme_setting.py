@@ -18,7 +18,10 @@ class InsertUpdateThemeSetting(Mutation):
     theme_setting = Field(ThemeSettingType)
 
     class Arguments:
+        theme_uuid = String(required=False)
         theme_type = String(required=True)
+        theme_title = String(required=False)
+        theme_description = String(required=False)
         setting = JSONCamelCase(required=True)
         updated_by = String(required=False)
 

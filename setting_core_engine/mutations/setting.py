@@ -18,6 +18,7 @@ class InsertUpdateSetting(Mutation):
     setting = Field(SettingType)
 
     class Arguments:
+        setting_uuid = String(required=False)
         setting_type = String(required=True)
         setting = JSONSnakeCase(required=True)
         updated_by = String(required=False)
