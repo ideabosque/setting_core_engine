@@ -15,6 +15,13 @@ from silvaengine_dynamodb_base import ListObjectType
 from silvaengine_utility import JSONCamelCase, Serializer
 
 
+_COORDINATION_BRIEF_FIELDS = {
+    "partition_key", "coordination_uuid", "coordination_name",
+    "coordination_description", "agents", "updated_by",
+    "created_at", "updated_at",
+}
+
+
 class CoordinationBriefType(ObjectType):
     partition_key = String()
     coordination_uuid = String()
@@ -55,24 +62,24 @@ class ThemeSettingType(ObjectType):
         if existing is not None:
             return existing
 
-        partition_key = getattr(parent, "partition_key", None)
         theme_uuid = getattr(parent, "theme_uuid", None)
-        if not partition_key or not theme_uuid:
+        if not theme_uuid:
             return []
 
         try:
             results = CoordinationModel.scan(
-                filter_condition=(
-                    (CoordinationModel.partition_key == partition_key)
-                    & (CoordinationModel.theme_uuid == theme_uuid)
-                )
+                filter_condition=(CoordinationModel.theme_uuid == theme_uuid)
             )
             coordinations = []
             for coordination in results:
                 try:
                     data = coordination.__dict__.get("attribute_values", {})
                     normalized = Serializer.json_normalize(data)
-                    coordinations.append(CoordinationBriefType(**normalized))
+                    filtered = {
+                        k: v for k, v in normalized.items()
+                        if k in _COORDINATION_BRIEF_FIELDS
+                    }
+                    coordinations.append(CoordinationBriefType(**filtered))
                 except Exception:
                     continue
             return coordinations
@@ -88,28 +95,28 @@ class ThemeSettingType(ObjectType):
         if existing is not None:
             return existing
 
-        partition_key = getattr(parent, "partition_key", None)
-        if not partition_key:
-            return []
-
         try:
             coordinations = ThemeSettingType.resolve_coordinations(parent, info)
-            agent_uuids = set()
+            agent_keys = []
+            seen = set()
             for coordination in coordinations:
+                coordination_partition_key = getattr(coordination, "partition_key", None)
                 agents_list = getattr(coordination, "agents", None) or []
                 for agent_entry in agents_list:
                     if isinstance(agent_entry, dict) and agent_entry.get("agent_uuid"):
-                        agent_uuids.add(agent_entry["agent_uuid"])
+                        agent_uuid = agent_entry["agent_uuid"]
+                        key = (coordination_partition_key, agent_uuid)
+                        if key not in seen:
+                            seen.add(key)
+                            agent_keys.append((coordination_partition_key, agent_uuid))
 
-            if not agent_uuids:
+            if not agent_keys:
                 return []
 
             loader = AgentLoader(info=info)
             promises = []
-            for agent_uuid in agent_uuids:
-                promises.append(
-                    loader.load((partition_key, agent_uuid))
-                )
+            for partition_key, agent_uuid in agent_keys:
+                promises.append(loader.load((partition_key, agent_uuid)))
 
             return Promise.all(promises).then(
                 lambda results: [
