@@ -20,7 +20,7 @@ from graphene import (
 
 from .queries.theme_setting import resolve_theme_setting_list, resolve_theme_setting
 from .mutations.theme_setting import InsertUpdateThemeSetting, DeleteThemeSetting
-from .types.theme_setting import ThemeSettingListType, ThemeSettingType
+from .types.theme_setting import ThemeSettingListType, ThemeSettingType, CoordinationBriefType, AgentBriefType
 from .queries.setting import resolve_setting_list, resolve_setting
 from .mutations.setting import InsertUpdateSetting, DeleteSetting
 from .types.setting import SettingType, SettingListType
@@ -29,6 +29,8 @@ def type_class():
     return [
         ThemeSettingType,
         ThemeSettingListType,
+        CoordinationBriefType,
+        AgentBriefType,
         SettingType,
         SettingListType
     ]
