@@ -7,10 +7,9 @@ import traceback
 from typing import Any, Dict
 
 from graphene import Boolean, Field, Mutation, String
-
 from silvaengine_utility import JSONCamelCase
 
-from ..models.theme_setting import delete_theme_setting, insert_update_theme_setting
+from ..models.repositories import get_repo
 from ..types.theme_setting import ThemeSettingType
 
 
@@ -30,7 +29,7 @@ class InsertUpdateThemeSetting(Mutation):
         root: Any, info: Any, **kwargs: Dict[str, Any]
     ) -> "InsertUpdateThemeSetting":
         try:
-            theme_setting = insert_update_theme_setting(info, **kwargs)
+            theme_setting = get_repo("theme_setting").insert_update(info, **kwargs)
         except Exception as e:
             log = traceback.format_exc()
             info.context.get("logger").error(log)
@@ -48,7 +47,7 @@ class DeleteThemeSetting(Mutation):
     @staticmethod
     def mutate(root: Any, info: Any, **kwargs: Dict[str, Any]) -> "DeleteThemeSetting":
         try:
-            ok = delete_theme_setting(info, **kwargs)
+            ok = get_repo("theme_setting").delete(info, **kwargs)
         except Exception as e:
             log = traceback.format_exc()
             info.context.get("logger").error(log)

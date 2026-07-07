@@ -9,6 +9,13 @@ dependencies = [
   "tenacity",
   "SilvaEngine-DynamoDB-Base",
   "SilvaEngine-Utility",
+  "silvaengine-definitions",
+]
+
+[project.optional-dependencies]
+postgresql = [
+  "SQLAlchemy>=1.4",
+  "psycopg2-binary>=2.9",
 ]
 
 [tool.pyright]
