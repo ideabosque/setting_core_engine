@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 
-__author__ = "jeffreyw"
+__author__ = "bibow"
 
 import functools
 import logging
@@ -29,8 +29,8 @@ from silvaengine_dynamodb_base import (
 from silvaengine_utility import method_cache
 from silvaengine_utility.serializer import Serializer
 
-from ..handlers.config import Config
-from ..types.theme_setting import ThemeSettingType, ThemeSettingListType
+from ...handlers.config import Config
+from ...types.theme_setting import ThemeSettingType, ThemeSettingListType
 
 class ThemeTypeIndex(LocalSecondaryIndex):
  
@@ -70,7 +70,7 @@ def purge_cache():
                 result = original_function(*args, **kwargs)
 
                 # Then purge cache after successful operation
-                from .cache import purge_entity_cascading_cache
+                from ..cache import purge_entity_cascading_cache
 
                 # Get entity keys from kwargs or entity parameter
                 entity_keys = {}
