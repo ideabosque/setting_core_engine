@@ -7,10 +7,9 @@ import traceback
 from typing import Any, Dict
 
 from graphene import Boolean, Field, Mutation, String
-
 from silvaengine_utility import JSONSnakeCase
 
-from ..models.setting import delete_setting, insert_update_setting
+from ..models.repositories import get_repo
 from ..types.setting import SettingType
 
 
@@ -28,7 +27,7 @@ class InsertUpdateSetting(Mutation):
         root: Any, info: Any, **kwargs: Dict[str, Any]
     ) -> "InsertUpdateSetting":
         try:
-            setting = insert_update_setting(info, **kwargs)
+            setting = get_repo("setting").insert_update(info, **kwargs)
         except Exception as e:
             log = traceback.format_exc()
             info.context.get("logger").error(log)
@@ -46,7 +45,7 @@ class DeleteSetting(Mutation):
     @staticmethod
     def mutate(root: Any, info: Any, **kwargs: Dict[str, Any]) -> "DeleteSetting":
         try:
-            ok = delete_setting(info, **kwargs)
+            ok = get_repo("setting").delete(info, **kwargs)
         except Exception as e:
             log = traceback.format_exc()
             info.context.get("logger").error(log)
